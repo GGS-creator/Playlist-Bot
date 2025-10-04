@@ -1,6 +1,4 @@
-# The GaganBot
-"""This is a cool playlist convertor and downloader Bot built by Gagan G Saralaya"""
-#Build start on 19-7-25 Completed 20-7-25 Time 3:11 am Fuck it's late and I have an exam tomorrow.
+# The PlaylistBot
 import os 
 import time
 from pytube import Playlist
@@ -16,9 +14,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
 # Correct paths for WSL environment
-chrome_path = "/mnt/c/Users/gagan/chrome-linux64/chrome"
-driver_path = "/mnt/c/Users/gagan/chromedriver-linux64/chromedriver"
-download_dir="/mnt/c/Users/gagan/Downloads" #songs get downloaded here
+chrome_path = "/mnt/chrome-linux64/chrome"
+driver_path = "/mnt/chromedriver-linux64/chromedriver"
+download_dir="/mnt/Downloads" #songs get downloaded here
 chrome_prefs={ "download.default_directory":download_dir,
               "download.prompt_for_download": False,
               "directory_upgrade": True,
@@ -64,7 +62,7 @@ og="og"
 if og in notepad_name:
     notepad_name="og.txt"
 
-second_website = "https://amp3.cc/"
+second_website = "https://amp3.cc/"  #If you want to change the website you can add the url here.
 
 if not notepad_name.endswith(".txt"):
     notepad_name += ".txt"
@@ -101,7 +99,7 @@ try:
             try:
                 # Paste URL
                 input_box = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.ID, "input-url"))
+                    EC.presence_of_element_located((By.ID, "input-url")) #Change this to the correct id of another webiste
                 )
                 input_box.clear()
                 input_box.send_keys(video_url)
@@ -109,7 +107,7 @@ try:
 
                 # Click Convert button
                 convert_button = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.ID, "convert-button"))
+                    EC.element_to_be_clickable((By.ID, "convert-button")) #Change the convert-button if change of website
                 )
                 time.sleep(1)
                 driver.execute_script("arguments[0].click();", convert_button)
@@ -119,7 +117,7 @@ try:
                 while True:
                     try:
                         converting_visible = "Converting" in driver.page_source
-                        percent_text = driver.find_element(By.CLASS_NAME, "progress-percent").text.strip().replace('%', '')
+                        percent_text = driver.find_element(By.CLASS_NAME, "progress-percent").text.strip().replace('%', '') #change the progress-percent with the correct class name or method to track progress
                         if converting_visible and int(percent_text) < 99:
                             time.sleep(1)
                             continue
@@ -128,7 +126,7 @@ try:
 
                     try:
                         another_button = WebDriverWait(driver, 5).until(
-                            EC.element_to_be_clickable((By.ID, "convert-another-button"))
+                            EC.element_to_be_clickable((By.ID, "convert-another-button")) #replace with proper id for convert-another-button
                         )
                         another_button.click()
                         print("Clicked 'Convert Another' button\n")
